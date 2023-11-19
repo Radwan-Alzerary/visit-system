@@ -1,0 +1,146 @@
+<%- include('header'); %>
+<div class="w-full flex justify-center items-center z-10 ">
+  <div id="paperPage" class="flex flex-col p-2 px-4 bg-[#fdfdf7] border-2">
+    <div class="flex justify-between items-center">
+      <div class="w-1/4 flex justify-center items-center">
+        <img src="/img/logo2.png" class="w-28 h-28" />
+      </div>
+      <div class="w-1/2">
+        <p class="text-center text-3xl font-bold text-blue-600">بطاقة دعوة</p>
+        <p class="text-center text-2xl font-bold">
+          برعاية السيد مدير عام دائرة صحة نينوى وتحت شعار
+        </p>
+      </div>
+      <div class="w-1/4 flex justify-center items-center">
+        <img src="/img/logo1.png" class="w-28 h-28" />
+      </div>
+    </div>
+    <div class="w-full relative">
+      <p class="text-center text-red-600 text-3xl font-bold">
+        صيادلة نينوى عمل دؤوب وتميز علمي
+      </p>
+      <p class="text-center text-2xl font-bold">
+        نتشرف بدعوتكم لحضور الندوة العلمية السادسة لقسم الصيدلة بالتعاون مع شعب
+        الصيدلة في المستشفيات وفريق دوبامين الصيدلاني وذلك يوم الخميس المصادف
+        23-11-2023 وعلى قاعة البيت الابيض في منطقة الغابات الساعة التاسعة صباحا
+        ...
+      </p>
+      <p class="text-center text-blue-600 py-4 text-3xl font-bold">
+        يسعدنا ويشرفنا حضوركم
+      </p>
+
+      <div id="qrcode" class="absolute bottom-2"></div>
+      <div class="w-full flex justify-center items-center">
+        <svg id="barcode" class=""></svg>
+      </div>
+      <div id="qrcode1" class="absolute left-0 bottom-2"></div>
+    </div>
+  </div>
+  
+</div>
+
+<div class="flex justify-center items-center z-50 p-20 relative">
+  <button
+    onclick="downloadAsJPEG()"
+    type="button"
+    class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+  >
+    تحميل الصورة
+  </button>
+  <button
+    onclick="generateNewVisit()"
+    type="button"
+    class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+  >
+    توليد جديد
+  </button>
+</div>
+
+<script>
+  function downloadAsJPEG() {
+    // Select the target div
+    const targetDiv = document.getElementById("paperPage");
+
+    // Set higher quality by increasing the scale
+    const scale = 3; // You can adjust this value
+
+    // Use html2canvas with a higher scale
+    html2canvas(targetDiv, { scale: scale }).then(function (canvas) {
+      // Convert canvas to data URL
+      const dataUrl = canvas.toDataURL("image/jpeg", 1.0); // Use 1.0 quality for JPEG
+      // Create a download link
+      const downloadLink = document.createElement("a");
+      downloadLink.href = dataUrl;
+      downloadLink.download = "downloaded_image.jpg";
+      // Trigger the download
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    });
+  }
+
+  function generateNewVisit() {
+    fetch("http://localhost:3000/visit/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // Set the content type to JSON
+      },
+      // You can include a request body if needed (depends on your server implementation)
+      // body: JSON.stringify({ /* Your request body data */ }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json(); // Parse the response body as JSON
+      })
+      .then((data) => {
+        generateBarcode(data._id);
+        generateQrBarcode(data._id);
+
+        console.log("Visit generated:", data);
+        // Handle the data as needed
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+        // Handle errors
+      });
+  }
+</script>
+
+<script type="text/javascript">
+  function generateBarcode(code) {
+    // Generate a random barcode value or use your own logic here
+    JsBarcode("#barcode", code, {
+      displayValue: false,
+      background: "#00000000",
+      height: 30,
+    });
+  }
+</script>
+
+<script type="text/javascript">
+  function generateQrBarcode(code) {
+    $("#qrcode").html("");
+    $("#qrcode1").html("");
+    // Generate a random barcode value or use your own logic here
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+      text: code,
+      width: 100,
+      height: 100,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H,
+    });
+    var qrcode = new QRCode(document.getElementById("qrcode1"), {
+      text: code,
+      width: 100,
+      height: 100,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H,
+    });
+  }
+</script>
+
+<%- include('footer',{currentpage:'dashboard'}); %>
