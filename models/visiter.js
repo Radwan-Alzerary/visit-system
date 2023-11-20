@@ -6,12 +6,17 @@ const VisitSchema = new mongoose.Schema({
   name: {
     type: String,
   },
+  indstrial: {
+    type: String,
+  },
+
   enterprise: {
     type: String,
   },
   email: {
     type: String,
   },
+  CareerTitle: { type: String },
   phoneNumber: {
     type: Number,
   },
@@ -32,8 +37,6 @@ const VisitSchema = new mongoose.Schema({
   note: {
     type: String,
   },
-
-
 });
 const Visit = mongoose.model("Visit", VisitSchema);
 

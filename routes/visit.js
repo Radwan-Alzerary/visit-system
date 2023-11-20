@@ -9,14 +9,17 @@ router.get("/", async (req, res) => {
 
 router.post("/generate", async (req, res) => {
   const visit = new Visit();
+  if (req.body.indstrial) {
+    visit.indstrial = req.body.indstrial;
+  }
   await visit.save();
   res.json(visit);
 });
 router.post("/reg/update", async (req, res) => {
   try {
-    console.log(req.body)
+    console.log(req.body);
     const visit = await Visit.findById(req.body.id);
-    console.log(req.body.id)
+    console.log(req.body.id);
 
     if (!visit) {
       return res.status(404).json({ error: "Visit not found" });
@@ -25,9 +28,9 @@ router.post("/reg/update", async (req, res) => {
     visit.name = req.body.name;
     visit.enterprise = req.body.enterprise;
     visit.email = req.body.email;
-    visit.phoneNumber = req.body.phoneNumber;
+    visit.CareerTitle = req.body.CareerTitle;
+    visit.registeredDate = Date.now();
     visit.registered = true;
-
     await visit.save();
     res.render("regesteryComplte");
   } catch (error) {

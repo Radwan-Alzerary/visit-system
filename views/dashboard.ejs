@@ -1,4 +1,9 @@
 <%- include('header'); %>
+<div class="flex justify-center items-center">
+  <input type="text" id="indstrial" placeholder="العنونة">
+
+</div>
+
 <div class="w-full flex justify-center items-center z-10 ">
   <div id="paperPage" class="flex flex-col p-2 px-4 bg-[#fdfdf7] border-2">
     <div class="flex justify-between items-center">
@@ -80,13 +85,14 @@
   }
 
   function generateNewVisit() {
+    const indstrial = $("#indstrial").val()
     fetch("/visit/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json", // Set the content type to JSON
       },
       // You can include a request body if needed (depends on your server implementation)
-      // body: JSON.stringify({ /* Your request body data */ }),
+      body: JSON.stringify({indstrial }),
     })
       .then((response) => {
         if (!response.ok) {
