@@ -6,7 +6,7 @@ const VisitSchema = new mongoose.Schema({
   name: {
     type: String,
   },
-  Enterprise: {
+  enterprise: {
     type: String,
   },
   email: {
@@ -27,8 +27,7 @@ const VisitSchema = new mongoose.Schema({
     default: false,
   },
   comingDate: {
-    type: Boolean,
-    default: false,
+    type: Date,
   },
   note: {
     type: String,

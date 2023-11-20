@@ -96,8 +96,7 @@
       })
       .then((data) => {
         generateBarcode(data._id);
-        generateQrBarcode(data._id);
-
+        generateQrBarcode(`http://78.141.210.148:4000/visit/reg/${data._id}`);
         console.log("Visit generated:", data);
         // Handle the data as needed
       })
