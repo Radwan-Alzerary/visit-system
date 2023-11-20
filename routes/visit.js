@@ -15,7 +15,7 @@ router.post("/generate", async (req, res) => {
 router.post("/reg/update", async (req, res) => {
   try {
     console.log(req.body)
-    const visit = await Visit.findOne({_id: req.body.id });
+    const visit = await Visit.findById(req.body.id);
     console.log(req.body.id)
 
     if (!visit) {
@@ -37,7 +37,7 @@ router.post("/reg/update", async (req, res) => {
 });
 
 router.get("/reg/:id", async (req, res) => {
-  const visit = await Visit.findOne({ _id: req.params._id });
+  const visit = await Visit.findById(req.params.id);
   if (visit) {
     if (visit.registered) {
       res.render("alredySubmint");
