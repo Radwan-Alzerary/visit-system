@@ -139,8 +139,9 @@ https://cdn.jsdelivr.net/npm/barcode-generator@0.1.0/index.min.js
               let commingState = "";
               if (element.coming) {
                 commingState =
-                  '                <td class="px-6 py-4" style ="color:green;">تم تاكيد حضورة</td>';
+                  '<td class="px-6 py-4" style ="color:green;">تم تاكيد حضورة</td>';
               } else {
+                commingState=
                 ` <td class="px-6 py-4" onClick="handelOnComingAccept('${element._id}')" style ="color:green;cursor: pointer;">تاكيد حضور</td>`;
               }
 
