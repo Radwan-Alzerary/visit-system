@@ -40,6 +40,30 @@ router.post("/reg/update", async (req, res) => {
   }
 });
 
+router.post("/new", async (req, res) => {
+  try {
+    console.log(req.body);
+    const visit = new Visit({
+      name: req.body.name,
+      enterprise: req.body.enterprise,
+      email: req.body.email,
+      CareerTitle : req.body.CareerTitle,
+      registeredDate: Date.now(),
+      registered: true
+    });
+
+    await visit.save();
+    res.render("regesteryComplte");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.get("/new", async (req, res) => {
+  res.render("newVisit");
+});
+
 router.get("/reg/:id", async (req, res) => {
   const visit = await Visit.findById(req.params.id);
   if (visit) {
