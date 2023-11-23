@@ -15,6 +15,7 @@ router.post("/generate", async (req, res) => {
   await visit.save();
   res.json(visit);
 });
+
 router.post("/reg/update", async (req, res) => {
   try {
     console.log(req.body);
@@ -51,4 +52,48 @@ router.get("/reg/:id", async (req, res) => {
     res.json({ error: "error" });
   }
 });
+
+router.get("/check", async (req, res) => {
+  const visits = await Visit.find({ registered: true }).sort({
+    enterprise: 1,
+  });
+
+  res.render("visitCheck", { visits });
+});
+
+router.post("/comingaccept", async (req, res) => {
+  const visits = await Visit.findByIdAndUpdate(req.body.id, { coming: true , comingDate:Date.now() });
+  res.json(visits);
+});
+
+router.get("/nameSearch/:name", async (req, res) => {
+  const visits = await Visit.find({
+    name: { $regex: req.params.name, $options: "i" },
+  });
+
+  res.json(visits);
+});
+
+router.get("/nameSearch/", async (req, res) => {
+  const visits = await Visit.find();
+
+  res.json(visits);
+});
+
+router.get("/check/:id", async (req, res) => {
+  const visit = await Visit.findById(req.params.id);
+  console.log(visit);
+  if (visit) {
+    if (visit.registered) {
+      res.render("visitProfile", { visit });
+    } else {
+      await Visit.findByIdAndUpdate(req.params.id, { registered: true });
+      res.render("visitRegestery", { visit: visit });
+    }
+  }else{
+    res.json("error");
+
+  }
+});
+
 module.exports = router;

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.02.min.css"
+    />
+    <script src="/js/jquery-3.6.3.min.js"></script>
+    <script src="/js/qrcode.min.js"></script>
+    <link href="/css/style.css" rel="stylesheet" />
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <script src="/js/JsBarcode.all.min.js"></script>
+    <link href="/dist/output.css" rel="stylesheet" />
+    <script src="
+https://cdn.jsdelivr.net/npm/barcode-generator@0.1.0/index.min.js
+"></script>
+
+    <link href="/css/all.min.css" rel="stylesheet" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <label
+        for="default-search"
+        class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+        >Search</label
+      >
+      <div class="relative">
+        <div
+          class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+        >
+          <svg
+            class="w-4 h-4 text-gray-500 dark:text-gray-400"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 20 20"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+            />
+          </svg>
+        </div>
+        <input
+          type="search"
+          oninput="searchHandel(event)"
+          id="default-search"
+          class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Search Mockups, Logos..."
+          required
+        />
+        <button
+          type="submit"
+          class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Search
+        </button>
+      </div>
+    </form>
+    <div class="overflow-scroll h-[90%]">
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table
+          class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+        >
+          <thead
+            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+          >
+            <tr>
+              <th scope="col" class="px-6 py-3">الاسم</th>
+              <th scope="col" class="px-6 py-3">
+                <div class="flex items-center">المسمى الوظيفي</div>
+              </th>
+              <th scope="col" class="px-6 py-3">
+                <div class="flex items-center">الايميل</div>
+              </th>
+              <th scope="col" class="px-6 py-3">
+                <div class="flex items-center">المؤسسة</div>
+              </th>
+              <th scope="col" class="px-6 py-3">
+                <div class="flex items-center text-center justify-center">
+                  تاريخ التسجيل
+                </div>
+              </th>
+              <th scope="col" class="px-6 py-3">
+                <div class="flex items-center">عنونة الدعوة</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="insideTable">
+            <%visits.forEach((visit,index)=>{%>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th
+                scope="row"
+                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                <%=visit.name%>
+              </th>
+              <td class="px-6 py-4"><%=visit.CareerTitle%></td>
+              <td class="px-6 py-4"><%=visit.email%></td>
+              <td class="px-6 py-4"><%=visit.enterprise%></td>
+              <td class="px-6 py-4 text-center"><%=visit.registeredDate%></td>
+              <td class="px-6 py-4"><%=visit.indstrial%></td>
+              <%if(visit.coming ){%>
+              <td class="px-6 py-4" style="color: green">تم تاكيد حضورة</td>
+              <%}else{%>
+              <td
+                class="px-6 py-4"
+                onClick="handelOnComingAccept('<%=visit.id%>')"
+                style="color: green; cursor: pointer"
+              >
+                تاكيد حضور
+              </td>
+
+              <%}%>
+            </tr>
+            <%})%>
+          </tbody>
+        </table>
+      </div>
+      <!-- <%- include('footer',{currentpage:'dashboard'}); %> -->
+    </div>
+    <script>
+      function searchHandel(event) {
+        const inputElement = event.target;
+        console.log(inputElement.value);
+        fetch(`/visit/nameSearch/${inputElement.value}`)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            let items = "";
+            data.forEach((element) => {
+              let commingState = "";
+              if (element.coming) {
+                commingState =
+                  '                <td class="px-6 py-4" style ="color:green;">تم تاكيد حضورة</td>';
+              } else {
+                ` <td class="px-6 py-4" onClick="handelOnComingAccept('${element._id}')" style ="color:green;cursor: pointer;">تاكيد حضور</td>`;
+              }
+
+              items += `            
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" >
+              <td class="px-6 py-4">
+                ${element.name}</td>
+              <td class="px-6 py-4">
+                ${element.CareerTitle}</td>
+              <td class="px-6 py-4"> ${element.email}</td>
+              <td class="px-6 py-4">${element.enterprise}</td>
+              <td class="px-6 py-4 text-center">${element.registeredDate}</td>
+              <td class="px-6 py-4">${element.indstrial}</td>
+              ${commingState}
+            </tr>
+            `;
+            });
+            $("#insideTable").html(items);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            // Handle errors
+          });
+      }
+      function handelOnComingAccept(id) {
+        console.log(id);
+        fetch("/visit/comingaccept/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: id,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            location.reload();
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            // Handle errors
+          });
+      }
+    </script>
+
+    <script>
+      // Initialize variables to store barcode data
+      let barcode = "";
+      let originBarcode = "";
+
+      // Function to handle key press events
+      const handleKeyPress = (event) => {
+        // Check for a special character (e.g., Enter) to determine the end of the barcode
+        if (event.key === "Enter") {
+          // Do something with the barcode data (e.g., send it to a server)
+          if (barcode !== "") {
+            console.log("Barcode Scanned:", barcode);
+            const currentUrl = window.location.href;
+            console.log("Current URL:", currentUrl);
+            const url = new URL(currentUrl);
+            const searchParams = new URLSearchParams(url.search);
+            originBarcode = barcode;
+            window.location.href = `http://localhost:4000/visit/check/${barcode}`;
+
+            barcode = "";
+          }
+        } else {
+          // Append the scanned character to the barcode string
+          barcode += event.key;
+        }
+      };
+
+      // Function to reset the barcode after a timeout
+      const resetBarcode = () => {
+        barcode = "";
+      };
+
+      // Set a timeout to reset the barcode after 20 milliseconds
+      setTimeout(resetBarcode, 20);
+
+      // Add an event listener to capture keyboard input
+      window.addEventListener("keypress", handleKeyPress);
+
+      // Function to clean up the event listener when needed
+      const removeKeyListener = () => {
+        window.removeEventListener("keypress", handleKeyPress);
+      };
+    </script>
+  </body>
+</html>
