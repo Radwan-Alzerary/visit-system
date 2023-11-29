@@ -10,7 +10,7 @@ router.get("/", ensureAuthenticated, async (req, res) => {
 });
 
 router.get("/visitor", async (req, res) => {
-  const visits = await Visit.find({registered:true}).sort({ enterprise: 1 });
+  const visits = await Visit.find({registered:true,coming:true}).sort({ enterprise: 1 });
   res.render("visitorList",{visits} );
 });
 
