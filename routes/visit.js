@@ -45,6 +45,7 @@ router.post("/new", async (req, res) => {
     console.log(req.body);
     const visit = new Visit({
       name: req.body.name,
+      inviteFrom:req.body.inviteFrom,
       enterprise: req.body.enterprise,
       email: req.body.email,
       CareerTitle : req.body.CareerTitle,

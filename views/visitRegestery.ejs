@@ -23,7 +23,8 @@
   <body class="bg-slate-100">
     <form action="/visit/reg/update" method="POST" class="p-4">
       <div class="w-full text-center text-2xl font-bold border-b-2 pb-4">
-        مرحبا بكم الى التسجيل في الندوة العلمية السادسة لقسم الصيدلة
+        مرحبا بكم في التسجيل في الندوة العلمية السنوية الاولى لاختصاص النسائية
+        في الموصل
       </div>
       <div class="mb-6">
         <label
@@ -44,7 +45,7 @@
         <label
           for="email"
           class="block mb-2 text-sm font-medium text-gray-900 text-center dark:text-white"
-          >المؤسسة</label
+          >الاختصاص</label
         >
 
         <input
@@ -52,7 +53,7 @@
           id="email"
           name="enterprise"
           class="bg-gray-50 border border-gray-300 text-right text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="يرجى ادخال اسم المؤسسة"
+          placeholder="يرجى ادخال الاختصاص"
           required
         />
       </div>
@@ -60,25 +61,37 @@
         <label
           for="email"
           class="block mb-2 text-sm font-medium text-gray-900 text-center dark:text-white"
-          >العنوان الوظيفي</label
+          >محل العمل</label
         >
         <input
           type="text"
           id="CareerTitle"
           name="CareerTitle"
           class="bg-gray-50 border text-right border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="يرجى ادخال العنوان الوظيفي"
+          placeholder="يرجى ادخال محل العمل"
           required
         />
-        <input
-        type="text"
-        name="id"
-        value="<%=visit.id%>"
-        class="bg-gray-50 hidden border text-right border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        placeholder="يرجى ادخال رقم الهاتف"
-        required
-      />
+        <select id="inviteFrom" name="inviteFrom">
+          <option value="نبض كروب">نبض كروب</option>
+          <option value="شركة الحكمة الدوائية">شركة الحكمة الدوائية</option>
+          <option value="شركة دبل هيرز الدوائية">شركة دبل هيرز الدوائية</option>
+          <option value="شركة ماريا للاجهزة الطبية">
+            شركة ماريا للاجهزة الطبية
+          </option>
+          <option value="شركة بيركو الدوائية">شركة بيركو الدوائية</option>
+          <option value="تطبيق راجيته لادارة العيادة الكترونيا">
+            تطبيق راجيته لادارة العيادة الكترونيا
+          </option>
+        </select>
 
+        <input
+          type="text"
+          name="id"
+          value="<%=visit.id%>"
+          class="bg-gray-50 hidden border text-right border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="يرجى ادخال رقم الهاتف"
+          required
+        />
       </div>
 
       <div class="mb-6">
