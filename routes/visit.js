@@ -43,6 +43,8 @@ router.post("/reg/update", async (req, res) => {
 router.post("/new", async (req, res) => {
   try {
     console.log(req.body);
+    console.log(req.body);
+    console.log(req.body);
     const visit = new Visit({
       name: req.body.name,
       inviteFrom:req.body.inviteFrom,

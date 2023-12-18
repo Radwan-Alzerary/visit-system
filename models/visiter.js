@@ -27,7 +27,7 @@ const VisitSchema = new mongoose.Schema({
   registeredDate: {
     type: Date,
   },
-  inviteFrom:{type:String},
+  inviteFrom: { type: String },
   coming: {
     type: Boolean,
     default: false,
