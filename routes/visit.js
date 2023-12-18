@@ -25,9 +25,9 @@ router.post("/reg/update", async (req, res) => {
     if (!visit) {
       return res.status(404).json({ error: "Visit not found" });
     }
-
     visit.name = req.body.name;
     visit.enterprise = req.body.enterprise;
+    visit.inviteFrom = req.body.inviteFrom;
     visit.email = req.body.email;
     visit.CareerTitle = req.body.CareerTitle;
     visit.registeredDate = Date.now();
