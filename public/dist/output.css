@@ -1096,6 +1096,10 @@ input:checked + .toggle-bg {
   bottom: 0.625rem;
 }
 
+.bottom-56 {
+  bottom: 14rem;
+}
+
 .bottom-\[60px\] {
   bottom: 60px;
 }
@@ -1116,6 +1120,10 @@ input:checked + .toggle-bg {
   right: 0px;
 }
 
+.right-16 {
+  right: 4rem;
+}
+
 .start-0 {
   inset-inline-start: 0px;
 }
@@ -1124,68 +1132,52 @@ input:checked + .toggle-bg {
   top: 0px;
 }
 
-.right-5 {
-  right: 1.25rem;
+.top-\[45\%\] {
+  top: 45%;
 }
 
-.right-6 {
-  right: 1.5rem;
+.top-\[47\%\] {
+  top: 47%;
 }
 
-.right-9 {
-  right: 2.25rem;
+.-left-0 {
+  left: -0px;
 }
 
-.right-14 {
+.-left-4 {
+  left: -1rem;
+}
+
+.-left-8 {
+  left: -2rem;
+}
+
+.right-\[4\.5rem\] {
+  right: 4.5rem;
+}
+
+.right-\[3\.5rem\] {
   right: 3.5rem;
 }
 
-.top-\[\] {
-  top: ;
+.bottom-\[13\.5rem\] {
+  bottom: 13.5rem;
 }
 
-.top-\[30\%\] {
-  top: 30%;
+.bottom-\[15\.5rem\] {
+  bottom: 15.5rem;
 }
 
-.bottom-14 {
-  bottom: 3.5rem;
+.bottom-\[15\.3rem\] {
+  bottom: 15.3rem;
 }
 
-.bottom-20 {
-  bottom: 5rem;
+.bottom-\[15rem\] {
+  bottom: 15rem;
 }
 
-.bottom-32 {
-  bottom: 8rem;
-}
-
-.bottom-4 {
-  bottom: 1rem;
-}
-
-.bottom-48 {
-  bottom: 12rem;
-}
-
-.bottom-5 {
-  bottom: 1.25rem;
-}
-
-.bottom-56 {
-  bottom: 14rem;
-}
-
-.right-16 {
-  right: 4rem;
-}
-
-.top-\[50\%\] {
-  top: 50%;
-}
-
-.top-\[45\%\] {
-  top: 45%;
+.bottom-\[14\.7rem\] {
+  bottom: 14.7rem;
 }
 
 .z-10 {
@@ -1328,14 +1320,6 @@ input:checked + .toggle-bg {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-\[\] {
-  height: ;
-}
-
-.h-\[40px\] {
-  height: 40px;
 }
 
 .w-1\/2 {

@@ -17,9 +17,7 @@
       توليد جديد
     </button>
   </div>
-  
 </div>
-
 
 <div class="w-full overflow-scroll flex justify-center items-center z-10">
   <!-- <div id="oldpaperPage" class="flex flex-col p-2 px-4 bg-[#fdfdf7] border-2">
@@ -59,42 +57,44 @@
     </div>
   </div> -->
 
-  <div id="paperPage" class="flex relative flex-col p-2 px-4  border-2">
-    <img src="/img/mock1.jpg" />
-    <div id="qrcode" class="absolute bottom-56 right-16  z-50"></div>
-    <div class=" absolute top-[45%] left-0 z-50 flex justify-center items-center rotate-90">
+  <div id="paperPage" class="flex relative flex-col p-2 px-4 border-2">
+    <img src="/img/mock2.jpg" />
+    <div id="qrcode" class="absolute bottom-[14.7rem] right-[3.5rem] z-50"></div>
+    <div
+      class="absolute top-[45%] -left-8 z-50 flex justify-center items-center rotate-90"
+    >
       <svg id="barcode" class=""></svg>
     </div>
-
   </div>
 </div>
 
 <script>
   function downloadAsJPEG() {
     // Select the target div
-    const targetDiv = document.getElementById("paperPage");
+      const targetDiv = document.getElementById("paperPage");
 
-    // Set higher quality by increasing the scale
-    const scale = 3; // You can adjust this value
+      // Set higher quality by increasing the scale
+      const scale = 3; // You can adjust this value
 
-    // Use html2canvas with a higher scale
-    html2canvas(targetDiv, { scale: scale }).then(function (canvas) {
-      // Convert canvas to data URL
-      const dataUrl = canvas.toDataURL("image/jpeg", 1.0); // Use 1.0 quality for JPEG
-      // Create a download link
-      const downloadLink = document.createElement("a");
-      downloadLink.href = dataUrl;
-      const indstrialname = $("#indstrial").val();
-      if (indstrialname.length > 0) {
-        downloadLink.download = `${indstrialname}.jpg`;
-      } else {
-        downloadLink.download = "downloaded_image.jpg";
-      }
-      // Trigger the download
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-    });
+      // Use html2canvas with a higher scale
+      html2canvas(targetDiv, { scale: scale }).then(function (canvas) {
+        // Convert canvas to data URL
+        const dataUrl = canvas.toDataURL("image/jpeg", 1.0); // Use 1.0 quality for JPEG
+        // Create a download link
+        const downloadLink = document.createElement("a");
+        downloadLink.href = dataUrl;
+        const indstrialname = $("#indstrial").val();
+        if (indstrialname.length > 0) {
+          downloadLink.download = `${indstrialname}.jpg`;
+        } else {
+          downloadLink.download = "downloaded_image.jpg";
+        }
+        // Trigger the download
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      });
+      generateNewVisit();
   }
 
   function generateNewVisit() {
@@ -116,6 +116,7 @@
       .then((data) => {
         generateBarcode(data._id);
         generateQrBarcode(`https://nabth.com/visit/reg/${data._id}`);
+
         console.log("Visit generated:", data);
         // Handle the data as needed
       })
