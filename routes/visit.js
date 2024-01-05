@@ -47,12 +47,12 @@ router.post("/new", async (req, res) => {
     console.log(req.body);
     const visit = new Visit({
       name: req.body.name,
-      inviteFrom:req.body.inviteFrom,
+      inviteFrom: req.body.inviteFrom,
       enterprise: req.body.enterprise,
       email: req.body.email,
-      CareerTitle : req.body.CareerTitle,
+      CareerTitle: req.body.CareerTitle,
       registeredDate: Date.now(),
-      registered: true
+      registered: true,
     });
 
     await visit.save();
@@ -81,7 +81,10 @@ router.get("/reg/:id", async (req, res) => {
 });
 
 router.get("/check", async (req, res) => {
-  const visits = await Visit.find({ registered: true }).sort({
+  const visits = await Visit.find({
+    indstrial: "مؤتمر المراه 2024/1/5",
+    registered: true,
+  }).sort({
     enterprise: 1,
   });
 
@@ -89,7 +92,10 @@ router.get("/check", async (req, res) => {
 });
 
 router.post("/comingaccept", async (req, res) => {
-  const visits = await Visit.findByIdAndUpdate(req.body.id, { coming: true , comingDate:Date.now() });
+  const visits = await Visit.findByIdAndUpdate(req.body.id, {
+    coming: true,
+    comingDate: Date.now(),
+  });
   res.json(visits);
 });
 
@@ -102,7 +108,12 @@ router.get("/nameSearch/:name", async (req, res) => {
 });
 
 router.get("/nameSearch/", async (req, res) => {
-  const visits = await Visit.find();
+  const visits = await Visit.find({
+    indstrial: "مؤتمر المراه 2024/1/5",
+    registered: true,
+  }).sort({
+    enterprise: 1,
+  });
 
   res.json(visits);
 });
@@ -117,9 +128,8 @@ router.get("/check/:id", async (req, res) => {
       await Visit.findByIdAndUpdate(req.params.id, { registered: true });
       res.render("visitRegestery", { visit: visit });
     }
-  }else{
+  } else {
     res.json("error");
-
   }
 });
 
