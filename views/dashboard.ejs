@@ -56,12 +56,11 @@
       <div id="qrcode1" class="absolute left-0 bottom-2"></div>
     </div>
   </div> -->
-
-  <div id="paperPage" class="flex relative flex-col p-2 px-4 border-2">
-    <img src="/img/mock2.jpg" />
-    <div id="qrcode" class="absolute bottom-[14.7rem] right-[3.5rem] z-50"></div>
+  <div id="paperPage" class="flex relative flex-col border-2">
+    <img src="/img/mock3.png" style="width: full;height: full;" />
+    <div id="qrcode" class="absolute bottom-[17.7rem] right-[9.2rem] z-50"></div>
     <div
-      class="absolute top-[45%] -left-8 z-50 flex justify-center items-center rotate-90"
+      class="absolute top-[45%] left-2 z-50 flex justify-center items-center rotate-90"
     >
       <svg id="barcode" class=""></svg>
     </div>
@@ -72,10 +71,8 @@
   function downloadAsJPEG() {
     // Select the target div
       const targetDiv = document.getElementById("paperPage");
-
       // Set higher quality by increasing the scale
       const scale = 3; // You can adjust this value
-
       // Use html2canvas with a higher scale
       html2canvas(targetDiv, { scale: scale }).then(function (canvas) {
         // Convert canvas to data URL
@@ -145,8 +142,8 @@
     // Generate a random barcode value or use your own logic here
     var qrcode = new QRCode(document.getElementById("qrcode"), {
       text: code,
-      width: 200,
-      height: 200,
+      width: 170,
+      height: 170,
       colorDark: "#000000",
       colorLight: "#ffffff",
       correctLevel: QRCode.CorrectLevel.H,

@@ -7,10 +7,16 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.02.min.css"
     />
+    <script
+    src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script
+    src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
     <script src="/js/jquery-3.6.3.min.js"></script>
     <script src="/js/qrcode.min.js"></script>
     <link href="/css/style.css" rel="stylesheet" />
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 
     <script src="/js/JsBarcode.all.min.js"></script>
     <link href="/dist/output.css" rel="stylesheet" />
@@ -23,6 +29,7 @@ https://cdn.jsdelivr.net/npm/barcode-generator@0.1.0/index.min.js
   </head>
   <body>
     <form>
+      <div id="download">تنزيل</div>
       <label
         for="default-search"
         class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -65,8 +72,8 @@ https://cdn.jsdelivr.net/npm/barcode-generator@0.1.0/index.min.js
       </div>
     </form>
     <div class="overflow-scroll h-[90%]">
-      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table
+      <div id="table-conatainer" class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table id="tablelist" class="striped"
           class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
         >
           <thead
@@ -126,7 +133,36 @@ https://cdn.jsdelivr.net/npm/barcode-generator@0.1.0/index.min.js
       </div>
       <!-- <%- include('footer',{currentpage:'dashboard'}); %> -->
     </div>
+    <script
+    src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script
+    src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
     <script>
+      function exportCSVExcel() {
+	$('#tablelist').table2excel({
+		exclude: ".no-export",
+		filename: "download.xls",
+		fileext: ".xls",
+		exclude_links: true,
+		exclude_inputs: true
+	});
+}
+
+      function exportToExcel() {
+        var location = "data:application/vnd.ms-excel;base64,";
+        var excelTemplate =
+          "<html> " +
+          "<head> " +
+          '<meta http-equiv="content-type" content="text/plain; charset=UTF-8"/> ' +
+          "</head> " +
+          "<body> " +
+          document.getElementById("table-conatainer").innerHTML +
+          "</body> " +
+          "</html>";
+        window.location.href = location + window.btoa(excelTemplate);
+      }
+
       function searchHandel(event) {
         const inputElement = event.target;
         console.log(inputElement.value);
@@ -141,8 +177,7 @@ https://cdn.jsdelivr.net/npm/barcode-generator@0.1.0/index.min.js
                 commingState =
                   '<td class="px-6 py-4" style ="color:green;">تم تاكيد حضورة</td>';
               } else {
-                commingState=
-                ` <td class="px-6 py-4" onClick="handelOnComingAccept('${element._id}')" style ="color:green;cursor: pointer;">تاكيد حضور</td>`;
+                commingState = ` <td class="px-6 py-4" onClick="handelOnComingAccept('${element._id}')" style ="color:green;cursor: pointer;">تاكيد حضور</td>`;
               }
 
               items += `            
@@ -187,7 +222,14 @@ https://cdn.jsdelivr.net/npm/barcode-generator@0.1.0/index.min.js
           });
       }
     </script>
+    <script>
+      onClick("#download", () => {
+        const table = document.querySelector("table");
+        const workbook = XLSX.utils.table_to_book(table, { sheet: "table" });
 
+        XLSX.writeFile(workbook, "table.xls");
+      });
+    </script>
     <script>
       // Initialize variables to store barcode data
       let barcode = "";

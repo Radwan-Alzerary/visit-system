@@ -84,6 +84,7 @@ router.get("/check", async (req, res) => {
   const visits = await Visit.find({
     indstrial: "مؤتمر المراه 2024/1/5",
     registered: true,
+    coming:true
   }).sort({
     enterprise: 1,
   });
