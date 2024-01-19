@@ -134,21 +134,21 @@ router.get("/nameSearch/:name", async (req, res) => {
   res.json(visits);
 });
 
-router.get("/random/", async (req, res) => {
+router.get("/award/", async (req, res) => {
   try {
     const visit = await Visit.aggregate([
       {
         $match: {
           indstrial: "مؤتمر جلدية 2024/1/19",
           registered: true,
+          coming: true,
         },
       },
       {
         $sample: { size: 1 },
       },
     ]);
-
-    res.json(visit);
+    res.render("award", { visit: visit });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
