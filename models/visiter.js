@@ -6,6 +6,10 @@ const VisitSchema = new mongoose.Schema({
   name: {
     type: String,
   },
+  nickname: {
+    type: String,
+  },
+
   indstrial: {
     type: String,
   },

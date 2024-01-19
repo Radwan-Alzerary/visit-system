@@ -42,9 +42,6 @@ router.post("/reg/update", async (req, res) => {
 
 router.post("/new", async (req, res) => {
   try {
-    console.log(req.body);
-    console.log(req.body);
-    console.log(req.body);
     const visit = new Visit({
       name: req.body.name,
       inviteFrom: req.body.inviteFrom,
@@ -57,6 +54,25 @@ router.post("/new", async (req, res) => {
 
     await visit.save();
     res.render("regesteryComplte");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+router.post("/manualnew", async (req, res) => {
+  try {
+    console.log(req.body);
+    console.log(req.body);
+    const visit = new Visit({
+      name: req.body.name,
+      nickname: req.body.kneeType,
+      indstrial: "مؤتمر جلدية 2024/1/19",
+      registeredDate: Date.now(),
+      registered: true,
+    });
+
+    await visit.save();
+    res.json("regesteryComplte");
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -81,12 +97,22 @@ router.get("/reg/:id", async (req, res) => {
 });
 
 router.get("/check", async (req, res) => {
+  // await Visit.updateMany({
+  //   indstrial: "مؤتمر جلدية 2024/1/19",
+  //   registered: true,
+  //   // coming: true
+  // }, {
+  //   $set: {
+  //     nickname: "الدكتور", // Assuming "$nickname" is the current value
+  //   }
+  // });
+
   const visits = await Visit.find({
-    indstrial: "مؤتمر المراه 2024/1/5",
+    indstrial: "مؤتمر جلدية 2024/1/19",
     registered: true,
-    coming:true
+    // coming:true
   }).sort({
-    enterprise: 1,
+    registeredDate: -1, // 1 for ascending order, -1 for descending order
   });
 
   res.render("visitCheck", { visits });
@@ -101,19 +127,21 @@ router.post("/comingaccept", async (req, res) => {
 });
 
 router.get("/nameSearch/:name", async (req, res) => {
-  const visits = await Visit.find({
-    name: { $regex: req.params.name, $options: "i" },
-  });
+  const visits = await Visit.find(
+    {
+      name: { $regex: req.params.name, $options: "i" },
+    }
+  );
 
   res.json(visits);
 });
 
 router.get("/nameSearch/", async (req, res) => {
   const visits = await Visit.find({
-    indstrial: "مؤتمر المراه 2024/1/5",
+    indstrial: "مؤتمر جلدية 2024/1/19",
     registered: true,
   }).sort({
-    enterprise: 1,
+    registeredDate: -1,
   });
 
   res.json(visits);
