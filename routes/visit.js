@@ -127,26 +127,33 @@ router.post("/comingaccept", async (req, res) => {
 });
 
 router.get("/nameSearch/:name", async (req, res) => {
-  const visits = await Visit.find(
-    {
-      name: { $regex: req.params.name, $options: "i" },
-    }
-  );
-
-  res.json(visits);
-});
-
-router.get("/random/", async (req, res) => {
   const visits = await Visit.find({
-    indstrial: "مؤتمر جلدية 2024/1/19",
-    registered: true,
-  }).sort({
-    registeredDate: -1,
+    name: { $regex: req.params.name, $options: "i" },
   });
 
   res.json(visits);
 });
 
+router.get("/random/", async (req, res) => {
+  try {
+    const visit = await Visit.aggregate([
+      {
+        $match: {
+          indstrial: "مؤتمر جلدية 2024/1/19",
+          registered: true,
+        },
+      },
+      {
+        $sample: { size: 1 },
+      },
+    ]);
+
+    res.json(visit);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 router.get("/nameSearch/", async (req, res) => {
   const visits = await Visit.find({
