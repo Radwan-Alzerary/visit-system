@@ -136,6 +136,18 @@ router.get("/nameSearch/:name", async (req, res) => {
   res.json(visits);
 });
 
+router.get("/random/", async (req, res) => {
+  const visits = await Visit.find({
+    indstrial: "مؤتمر جلدية 2024/1/19",
+    registered: true,
+  }).sort({
+    registeredDate: -1,
+  });
+
+  res.json(visits);
+});
+
+
 router.get("/nameSearch/", async (req, res) => {
   const visits = await Visit.find({
     indstrial: "مؤتمر جلدية 2024/1/19",
