@@ -110,7 +110,7 @@ router.get("/check", async (req, res) => {
   const visits = await Visit.find({
     indstrial: "مؤتمر جلدية 2024/1/19",
     registered: true,
-    // coming:true
+    coming:true
   }).sort({
     registeredDate: -1, // 1 for ascending order, -1 for descending order
   });
